@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TAHEV — Procurement & Supply Consulting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0A1628;
+      --navy-mid: #0E1F3D;
+      --navy-light: #152848;
+      --gold: #C9A84C;
+      --gold-light: #E2C06A;
+      --gold-pale: #F5E9C8;
+      --white: #FFFFFF;
+      --off-white: #F0EDE6;
+      --text-muted: #8FA3C1;
+      --border: rgba(201, 168, 76, 0.2);
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'Inter', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--navy); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+    /* ── UTILITY ── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+    .gold { color: var(--gold); }
+    .serif { font-family: var(--serif); }
+
+    /* ── NAVIGATION ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 1.2rem 0;
+      transition: all 0.4s ease;
+    }
+    nav.scrolled {
+      background: rgba(10, 22, 40, 0.96);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.8rem 0;
+    }
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      text-decoration: none;
+      color: var(--white);
+    }
+    .logo-badge {
+      width: 40px;
+      height: 40px;
+      background: var(--gold);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: 0.04em;
+      flex-shrink: 0;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .logo:hover .logo-badge {
+      background: var(--gold-light);
+      transform: scale(1.06);
+    }
+    .logo-wordmark {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+    }
+    .logo-wordmark strong {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--white);
+    }
+    .logo-wordmark em {
+      font-family: var(--sans);
+      font-style: normal;
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 2px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 0.55rem 1.4rem;
+      border-radius: 2px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .nav-cta:hover {
+      background: var(--gold);
+      color: var(--navy);
+    }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--gold);
+      transition: all 0.3s;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 8rem 0 6rem;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 50%, rgba(201,168,76,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 20% 30%, rgba(21,40,72,0.8) 0%, transparent 70%),
+        linear-gradient(135deg, #0A1628 0%, #0E1F3D 50%, #0A1628 100%);
+    }
+    .hero-grid-overlay {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse at center, black 20%, transparent 80%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 780px;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.8rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.2s forwards;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--gold);
+    }
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 600;
+      line-height: 1.08;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.4s forwards;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 540px;
+      line-height: 1.75;
+      margin-bottom: 2.8rem;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.6s forwards;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.8s forwards;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: var(--navy);
+      padding: 1rem 2.2rem;
+      border: none;
+      border-radius: 2px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: inline-block;
+    }
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(201,168,76,0.3);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--white);
+      padding: 1rem 2.2rem;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 2px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: inline-block;
+    }
+    .btn-ghost:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    .hero-stats {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      z-index: 2;
+      opacity: 0;
+      animation: fadeLeft 0.9s ease 1s forwards;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.4rem 1.8rem;
+      text-align: center;
+      backdrop-filter: blur(8px);
+      min-width: 160px;
+    }
+    .stat-number {
+      font-family: var(--serif);
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+      display: block;
+    }
+    .stat-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 0.4rem;
+    }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 7rem 0; }
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--gold);
+    }
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 600;
+      line-height: 1.15;
+      margin-bottom: 1.4rem;
+    }
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 560px;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      margin: 1.5rem 0;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      background: var(--navy-mid);
+      position: relative;
+      overflow: hidden;
+    }
+    #about::before {
+      content: 'TAHEV';
+      position: absolute;
+      right: -2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--serif);
+      font-size: 18rem;
+      font-weight: 700;
+      color: rgba(201,168,76,0.03);
+      pointer-events: none;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .about-visual {
+      position: relative;
+    }
+    .about-image-frame {
+      position: relative;
+      aspect-ratio: 4/5;
+      max-width: 440px;
+    }
+    .about-image-frame::before {
+      content: '';
+      position: absolute;
+      inset: -16px -16px 16px 16px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      z-index: 0;
+    }
+    .about-image-inner {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(145deg, var(--navy-light) 0%, #0B2240 60%, var(--navy-mid) 100%);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .about-icon-large {
+      font-size: 8rem;
+      opacity: 0.12;
+      user-select: none;
+    }
+    .about-badge {
+      position: absolute;
+      bottom: -1.5rem;
+      right: -1.5rem;
+      background: var(--gold);
+      color: var(--navy);
+      padding: 1.2rem 1.6rem;
+      border-radius: 4px;
+      z-index: 2;
+      text-align: center;
+    }
+    .about-badge strong {
+      display: block;
+      font-family: var(--serif);
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .about-badge span {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .about-pillars {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+    .pillar {
+      background: rgba(201,168,76,0.06);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.2rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .pillar:hover {
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.1);
+    }
+    .pillar-icon {
+      color: var(--gold);
+      font-size: 1.4rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+    .pillar-text strong {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+    .pillar-text span {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ── SERVICES ── */
+    #services { background: var(--navy); }
+    .services-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 4rem;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .service-card {
+      background: var(--navy);
+      padding: 3rem 2.2rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s;
+      cursor: default;
+    }
+    .service-card:hover { background: var(--navy-light); }
+    .service-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--gold);
+      transition: width 0.4s ease;
+    }
+    .service-card:hover::after { width: 100%; }
+    .service-number {
+      font-family: var(--serif);
+      font-size: 4.5rem;
+      font-weight: 700;
+      color: rgba(201,168,76,0.08);
+      line-height: 1;
+      margin-bottom: 1rem;
+      transition: color 0.4s;
+    }
+    .service-card:hover .service-number { color: rgba(201,168,76,0.15); }
+    .service-icon-wrap {
+      width: 52px;
+      height: 52px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+      transition: all 0.3s;
+    }
+    .service-card:hover .service-icon-wrap {
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.1);
+    }
+    .service-title {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      line-height: 1.25;
+    }
+    .service-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.75;
+      margin-bottom: 1.8rem;
+    }
+    .service-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .service-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+    .service-list li::before {
+      content: '→';
+      color: var(--gold);
+      flex-shrink: 0;
+      margin-top: 0.05rem;
+    }
+
+    /* ── WHY CHOOSE US ── */
+    #why {
+      background: linear-gradient(180deg, var(--navy-mid) 0%, var(--navy) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    #why::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(180deg, transparent, var(--border) 30%, var(--border) 70%, transparent);
+    }
+    .why-header { text-align: center; margin-bottom: 5rem; }
+    .why-header .section-desc { margin: 0 auto; }
+    .why-header .divider { margin: 1.5rem auto; }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 5rem;
+    }
+    .why-card {
+      background: var(--navy);
+      padding: 2.5rem;
+      display: flex;
+      gap: 1.5rem;
+      transition: background 0.3s;
+      align-items: flex-start;
+    }
+    .why-card:hover { background: rgba(14,31,61,0.9); }
+    .why-number {
+      font-family: var(--serif);
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+      flex-shrink: 0;
+      opacity: 0.5;
+    }
+    .why-body strong {
+      display: block;
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+    }
+    .why-body p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    .why-banner {
+      background: linear-gradient(135deg, var(--navy-light) 0%, #0B2545 100%);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 3rem;
+      align-items: center;
+    }
+    .why-banner-text h3 {
+      font-family: var(--serif);
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+    }
+    .why-banner-text p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      max-width: 500px;
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: var(--navy-mid);
+      position: relative;
+      overflow: hidden;
+    }
+    #contact::after {
+      content: '';
+      position: absolute;
+      bottom: -200px; right: -200px;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .contact-info h3 {
+      font-family: var(--serif);
+      font-size: 2.8rem;
+      font-weight: 600;
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+    }
+    .contact-info p {
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-bottom: 2.5rem;
+      font-size: 0.95rem;
+    }
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.2rem;
+      background: rgba(201,168,76,0.05);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      transition: border-color 0.3s;
+    }
+    .contact-item:hover { border-color: var(--gold); }
+    .contact-item-icon {
+      color: var(--gold);
+      font-size: 1.1rem;
+      margin-top: 0.1rem;
+      flex-shrink: 0;
+    }
+    .contact-item-body strong {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.25rem;
+    }
+    .contact-item-body span {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* Form */
+    .contact-form {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 3rem;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.2rem; }
+    .form-group label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 3px;
+      padding: 0.85rem 1rem;
+      color: var(--white);
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.3s, background 0.3s;
+      width: 100%;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.06);
+    }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-group select option { background: var(--navy-mid); }
+    .form-submit {
+      width: 100%;
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      padding: 1.1rem;
+      border-radius: 3px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 0.5rem;
+    }
+    .form-submit:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(201,168,76,0.35);
+    }
+    .form-note {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    /* Success message */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+    }
+    .form-success .checkmark {
+      font-size: 3rem;
+      display: block;
+      margin-bottom: 1rem;
+      color: var(--gold);
+    }
+    .form-success h4 {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      margin-bottom: 0.6rem;
+    }
+    .form-success p { color: var(--text-muted); font-size: 0.9rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #060F1E;
+      border-top: 1px solid var(--border);
+      padding: 4rem 0 2rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 3rem;
+    }
+    .footer-brand .logo { margin-bottom: 1rem; }
+    .footer-brand .logo-badge { width: 36px; height: 36px; font-size: 1rem; }
+    .footer-brand p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 280px;
+    }
+    .footer-col h4 {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+    .footer-col ul a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.3s;
+    }
+    .footer-col ul a:hover { color: var(--white); }
+    .footer-bottom {
+      border-top: 1px solid rgba(201,168,76,0.1);
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-bottom p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+    .footer-bottom span { color: var(--gold); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeLeft {
+      from { opacity: 0; transform: translate(28px, -50%); }
+      to { opacity: 1; transform: translate(0, -50%); }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 1024px) {
+      .hero-stats { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 4rem; }
+      .about-visual { max-width: 380px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      nav.mobile-open .nav-links {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(10,22,40,0.98);
+        backdrop-filter: blur(20px);
+        align-items: center;
+        justify-content: center;
+        gap: 2.5rem;
+        z-index: 999;
+      }
+      nav.mobile-open .nav-links a { font-size: 1.2rem; }
+      section { padding: 5rem 0; }
+      .why-grid { grid-template-columns: 1fr; }
+      .why-banner { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .about-pillars { grid-template-columns: 1fr; }
+      .services-header { flex-direction: column; align-items: flex-start; }
+      .process-steps { grid-template-columns: 1fr 1fr; }
+      .process-steps::before { display: none; }
+      .process-bottom { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .process-steps { grid-template-columns: 1fr; }
+    }
+
+    /* ── PROCESS ── */
+    #process {
+      background: var(--navy-mid);
+      position: relative;
+      overflow: hidden;
+    }
+    #process::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+    .process-header { text-align: center; margin-bottom: 5rem; }
+    .process-header .section-desc { margin: 0 auto; }
+    .process-header .divider { margin: 1.5rem auto; }
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    .process-steps::before {
+      content: '';
+      position: absolute;
+      top: 52px;
+      left: calc(12.5% + 26px);
+      right: calc(12.5% + 26px);
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold) 0%, rgba(201,168,76,0.15) 100%);
+      z-index: 0;
+    }
+    .process-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .step-node {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--navy-mid);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2rem;
+      position: relative;
+      transition: all 0.4s;
+    }
+    .step-node::after {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 1px solid transparent;
+      transition: border-color 0.4s;
+    }
+    .process-step:hover .step-node {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+    .process-step:hover .step-node::after {
+      border-color: rgba(201,168,76,0.3);
+    }
+    .step-node span {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--gold);
+      transition: color 0.4s;
+    }
+    .process-step:hover .step-node span { color: var(--navy); }
+    .step-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+    .step-title {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+      line-height: 1.25;
+    }
+    .step-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+    }
+    .process-bottom {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-top: 5rem;
+    }
+    .process-stat {
+      background: var(--navy);
+      padding: 2.2rem;
+      text-align: center;
+      transition: background 0.3s;
+    }
+    .process-stat:hover { background: var(--navy-light); }
+    .process-stat-num {
+      font-family: var(--serif);
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--gold);
+      display: block;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .process-stat-label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav id="navbar">
+    <div class="container">
+      <a href="#" class="logo">
+        <span class="logo-badge">TC</span>
+        <span class="logo-wordmark"><strong>TAHEV</strong><em>Consult</em></span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#why">Why Us</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a href="#contact" class="nav-cta">Get Started</a>
+      <div class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid-overlay"></div>
+    <div class="container">
+      <div class="hero-content">
+        <p class="hero-eyebrow">Procurement &amp; Supply Consulting</p>
+        <h1 class="hero-title">
+          Smarter Procurement.<br />
+          <em>Stronger Outcomes.</em>
+        </h1>
+        <p class="hero-subtitle">
+          TAHEV bridges the gap between buyers and sellers — delivering strategic procurement consulting, tender management, and business structure advisory that drives measurable results.
+        </p>
+        <div class="hero-actions">
+          <a href="#services" class="btn-primary">Explore Services</a>
+          <a href="#contact" class="btn-ghost">Book a Consultation</a>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-card">
+          <span class="stat-number">100%</span>
+          <p class="stat-label">Client Focus</p>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">3</span>
+          <p class="stat-label">Core Services</p>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">B2B</span>
+          <p class="stat-label">Specialist</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-visual reveal">
+          <div class="about-image-frame">
+            <div class="about-image-inner">
+              <span class="about-icon-large">⚖</span>
+            </div>
+            <div class="about-badge">
+              <strong>TAHEV</strong>
+              <span>Consulting</span>
+            </div>
+          </div>
+        </div>
+        <div class="about-text">
+          <p class="section-label reveal">About Us</p>
+          <h2 class="section-title reveal reveal-delay-1">
+            Founded to Serve Both<br /><em class="gold">Buyer &amp; Seller</em>
+          </h2>
+          <div class="divider reveal reveal-delay-2"></div>
+          <p class="section-desc reveal reveal-delay-2">
+            TAHEV was founded with a singular mission: to create clarity and confidence in procurement and supply chain relationships. Whether you are a buyer navigating complex tender requirements or a seller structuring competitive bids, TAHEV provides the expertise to move forward with certainty.
+          </p>
+          <p class="section-desc reveal reveal-delay-3" style="margin-top: 1rem;">
+            Beyond procurement, our business structure consulting empowers organisations to build efficient, scalable frameworks that support long-term growth.
+          </p>
+          <div class="about-pillars">
+            <div class="pillar reveal reveal-delay-1">
+              <span class="pillar-icon">◈</span>
+              <div class="pillar-text">
+                <strong>Buyer Advisory</strong>
+                <span>Strategic sourcing and vendor evaluation for procurement teams</span>
+              </div>
+            </div>
+            <div class="pillar reveal reveal-delay-2">
+              <span class="pillar-icon">◈</span>
+              <div class="pillar-text">
+                <strong>Seller Support</strong>
+                <span>Tender preparation, bid writing, and compliance guidance</span>
+              </div>
+            </div>
+            <div class="pillar reveal reveal-delay-3">
+              <span class="pillar-icon">◈</span>
+              <div class="pillar-text">
+                <strong>Structure Consulting</strong>
+                <span>Business architecture and operational framework design</span>
+              </div>
+            </div>
+            <div class="pillar reveal reveal-delay-4">
+              <span class="pillar-icon">◈</span>
+              <div class="pillar-text">
+                <strong>End-to-End Guidance</strong>
+                <span>From strategy to execution across the full supply chain</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="container">
+      <div class="services-header">
+        <div>
+          <p class="section-label reveal">What We Do</p>
+          <h2 class="section-title reveal reveal-delay-1">Our Core Services</h2>
+        </div>
+        <p class="section-desc reveal reveal-delay-2" style="max-width: 360px; text-align: right;">
+          Tailored solutions for every stage of the procurement and supply lifecycle.
+        </p>
+      </div>
+
+      <div class="services-grid">
+        <!-- Service 1 -->
+        <div class="service-card reveal">
+          <div class="service-number">01</div>
+          <div class="service-icon-wrap">🔗</div>
+          <h3 class="service-title">Procurement Consulting</h3>
+          <p class="service-desc">
+            We work with buyer organisations to optimise their procurement strategy, reduce costs, mitigate supply risk, and build supplier relationships that deliver lasting value.
+          </p>
+          <ul class="service-list">
+            <li>Sourcing strategy &amp; market analysis</li>
+            <li>Supplier identification &amp; vetting</li>
+            <li>Contract negotiation support</li>
+            <li>Procurement process optimisation</li>
+            <li>Spend analysis &amp; cost reduction</li>
+          </ul>
+        </div>
+
+        <!-- Service 2 -->
+        <div class="service-card reveal reveal-delay-1">
+          <div class="service-number">02</div>
+          <div class="service-icon-wrap">📋</div>
+          <h3 class="service-title">Tender Management</h3>
+          <p class="service-desc">
+            We guide both buyers crafting tender documents and sellers preparing winning bids — ensuring compliance, competitiveness, and clarity at every step of the process.
+          </p>
+          <ul class="service-list">
+            <li>Tender document preparation</li>
+            <li>Bid writing &amp; proposal development</li>
+            <li>Evaluation criteria design</li>
+            <li>Compliance review &amp; risk assessment</li>
+            <li>Post-award contract management</li>
+          </ul>
+        </div>
+
+        <!-- Service 3 -->
+        <div class="service-card reveal reveal-delay-2">
+          <div class="service-number">03</div>
+          <div class="service-icon-wrap">🏛</div>
+          <h3 class="service-title">Business Structure Consulting</h3>
+          <p class="service-desc">
+            We help organisations design and refine their operational and corporate structures — ensuring the right frameworks are in place for governance, scalability, and performance.
+          </p>
+          <ul class="service-list">
+            <li>Organisational design &amp; restructuring</li>
+            <li>Operational framework development</li>
+            <li>Governance &amp; compliance structuring</li>
+            <li>Business model advisory</li>
+            <li>Change management support</li>
+          </ul>
+        </div>
+
+        <!-- Service 4 -->
+        <div class="service-card reveal">
+          <div class="service-number">04</div>
+          <div class="service-icon-wrap">⛓</div>
+          <h3 class="service-title">Supply Chain Advisory</h3>
+          <p class="service-desc">
+            We help organisations build resilient, efficient, and transparent supply chains — identifying vulnerabilities, optimising logistics, and strengthening supplier ecosystems from end to end.
+          </p>
+          <ul class="service-list">
+            <li>Supply chain mapping &amp; risk assessment</li>
+            <li>Vendor diversification strategy</li>
+            <li>Inventory &amp; logistics optimisation</li>
+            <li>Sustainability &amp; ethical sourcing</li>
+            <li>Supply chain digitalisation advisory</li>
+          </ul>
+        </div>
+
+        <!-- Service 5 -->
+        <div class="service-card reveal reveal-delay-1">
+          <div class="service-number">05</div>
+          <div class="service-icon-wrap">🌍</div>
+          <h3 class="service-title">Market Entry &amp; Seller Support</h3>
+          <p class="service-desc">
+            We equip sellers and new market entrants with the intelligence, positioning, and tools needed to win business in competitive procurement environments — locally and internationally.
+          </p>
+          <ul class="service-list">
+            <li>Market entry strategy &amp; feasibility</li>
+            <li>Buyer landscape analysis</li>
+            <li>Seller positioning &amp; differentiation</li>
+            <li>Pre-qualification &amp; accreditation support</li>
+            <li>Relationship &amp; pipeline development</li>
+          </ul>
+        </div>
+
+        <!-- Service 6 -->
+        <div class="service-card reveal reveal-delay-2">
+          <div class="service-number">06</div>
+          <div class="service-icon-wrap">🎓</div>
+          <h3 class="service-title">Training &amp; Capacity Building</h3>
+          <p class="service-desc">
+            We develop the internal capabilities of your procurement and supply teams — delivering practical training programmes that embed best practices and raise performance standards across your organisation.
+          </p>
+          <ul class="service-list">
+            <li>Procurement fundamentals &amp; best practices</li>
+            <li>Tender writing &amp; bid management workshops</li>
+            <li>Supplier relationship management training</li>
+            <li>Negotiation skills development</li>
+            <li>Bespoke in-house training programmes</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process">
+    <div class="container">
+      <div class="process-header">
+        <p class="section-label reveal" style="justify-content: center;">How We Work</p>
+        <h2 class="section-title reveal reveal-delay-1">Our Engagement Process</h2>
+        <div class="divider reveal reveal-delay-2"></div>
+        <p class="section-desc reveal reveal-delay-2">
+          A structured, transparent approach from first conversation to final delivery — so you always know where you stand.
+        </p>
+      </div>
+
+      <div class="process-steps">
+        <div class="process-step reveal">
+          <div class="step-node"><span>01</span></div>
+          <p class="step-label">Step One</p>
+          <h3 class="step-title">Discovery &amp; Assessment</h3>
+          <p class="step-desc">We begin with a deep-dive into your organisation, challenges, goals, and current procurement or business structure landscape.</p>
+        </div>
+        <div class="process-step reveal reveal-delay-1">
+          <div class="step-node"><span>02</span></div>
+          <p class="step-label">Step Two</p>
+          <h3 class="step-title">Strategy Development</h3>
+          <p class="step-desc">We craft a bespoke strategy aligned to your objectives — covering sourcing, tender approach, or structural redesign as required.</p>
+        </div>
+        <div class="process-step reveal reveal-delay-2">
+          <div class="step-node"><span>03</span></div>
+          <p class="step-label">Step Three</p>
+          <h3 class="step-title">Implementation Support</h3>
+          <p class="step-desc">We work alongside your team to execute the strategy — preparing documents, engaging stakeholders, and managing the process end-to-end.</p>
+        </div>
+        <div class="process-step reveal reveal-delay-3">
+          <div class="step-node"><span>04</span></div>
+          <p class="step-label">Step Four</p>
+          <h3 class="step-title">Review &amp; Optimisation</h3>
+          <p class="step-desc">We measure outcomes against your goals, capture learnings, and refine processes to ensure continuous improvement beyond the engagement.</p>
+        </div>
+      </div>
+
+      <div class="process-bottom reveal">
+        <div class="process-stat">
+          <span class="process-stat-num">4</span>
+          <p class="process-stat-label">Clear Steps</p>
+        </div>
+        <div class="process-stat">
+          <span class="process-stat-num">1:1</span>
+          <p class="process-stat-label">Dedicated Consultant</p>
+        </div>
+        <div class="process-stat">
+          <span class="process-stat-num">100%</span>
+          <p class="process-stat-label">Transparent Progress</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US -->
+  <section id="why">
+    <div class="container">
+      <div class="why-header">
+        <p class="section-label reveal" style="justify-content: center;">Why TAHEV</p>
+        <h2 class="section-title reveal reveal-delay-1">The TAHEV Difference</h2>
+        <div class="divider reveal reveal-delay-2"></div>
+        <p class="section-desc reveal reveal-delay-2">
+          We don't take sides — we take a complete view. Our independence ensures advice that serves your best interests, always.
+        </p>
+      </div>
+
+      <div class="why-grid">
+        <div class="why-card reveal">
+          <span class="why-number">1</span>
+          <div class="why-body">
+            <strong>Dual-Perspective Expertise</strong>
+            <p>Unlike consultants who serve only buyers or only sellers, TAHEV understands both sides of every transaction — giving you deeper insight and more effective strategies.</p>
+          </div>
+        </div>
+        <div class="why-card reveal reveal-delay-1">
+          <span class="why-number">2</span>
+          <div class="why-body">
+            <strong>Practical, Actionable Advice</strong>
+            <p>We deliver recommendations you can actually implement — not theoretical frameworks. Every engagement ends with a clear, executable roadmap tailored to your organisation.</p>
+          </div>
+        </div>
+        <div class="why-card reveal reveal-delay-2">
+          <span class="why-number">3</span>
+          <div class="why-body">
+            <strong>End-to-End Support</strong>
+            <p>From initial strategy through to execution and review, TAHEV walks alongside you — ensuring continuity and accountability throughout the entire process.</p>
+          </div>
+        </div>
+        <div class="why-card reveal reveal-delay-3">
+          <span class="why-number">4</span>
+          <div class="why-body">
+            <strong>Confidentiality &amp; Integrity</strong>
+            <p>Your commercial interests are protected at every stage. We operate with the highest standards of professional discretion and ethical conduct.</p>
+          </div>
+        </div>
+        <div class="why-card reveal">
+          <span class="why-number">5</span>
+          <div class="why-body">
+            <strong>Industry Agnostic</strong>
+            <p>Our procurement and structural frameworks have been applied across multiple sectors. Wherever you operate, TAHEV's principles translate into results.</p>
+          </div>
+        </div>
+        <div class="why-card reveal reveal-delay-1">
+          <span class="why-number">6</span>
+          <div class="why-body">
+            <strong>Outcome-Driven Engagement</strong>
+            <p>We measure success by your results — reduced costs, successful bids, stronger structures, and better supplier relationships. Your win is our mandate.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="why-banner reveal">
+        <div class="why-banner-text">
+          <h3>Ready to transform your<br /><em class="gold">procurement approach?</em></h3>
+          <p>Join the organisations that trust TAHEV to deliver clarity, strategy, and results across their procurement and supply chain challenges.</p>
+        </div>
+        <a href="#contact" class="btn-primary">Talk to an Expert</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <p class="section-label">Get in Touch</p>
+          <h3>Let's Start a<br /><em class="gold">Conversation</em></h3>
+          <div class="divider"></div>
+          <p>Tell us about your procurement challenge, tender requirement, or business structure need. Our team will respond within one business day.</p>
+          <div class="contact-details">
+            <div class="contact-item">
+              <span class="contact-item-icon">✉</span>
+              <div class="contact-item-body">
+                <strong>Email</strong>
+                <span>info@tahevconsult.com</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <span class="contact-item-icon">☎</span>
+              <div class="contact-item-body">
+                <strong>Call Us</strong>
+                <span>08035990721</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <span class="contact-item-icon">◉</span>
+              <div class="contact-item-body">
+                <strong>Office</strong>
+                <span>108a Independence Ave, Central Business District, Abuja 900103, Federal Capital Territory</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form reveal reveal-delay-2" id="contactForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">First Name</label>
+              <input type="text" id="fname" placeholder="John" />
+            </div>
+            <div class="form-group">
+              <label for="lname">Last Name</label>
+              <input type="text" id="lname" placeholder="Smith" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="john@company.com" />
+          </div>
+          <div class="form-group">
+            <label for="organisation">Organisation</label>
+            <input type="text" id="organisation" placeholder="Your company name" />
+          </div>
+          <div class="form-group">
+            <label for="service">Service of Interest</label>
+            <select id="service">
+              <option value="" disabled selected>Select a service...</option>
+              <option>Procurement Consulting</option>
+              <option>Tender Management</option>
+              <option>Business Structure Consulting</option>
+              <option>General Enquiry</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Your Message</label>
+            <textarea id="message" placeholder="Tell us about your challenge or requirement..."></textarea>
+          </div>
+          <button class="form-submit" onclick="submitForm(event)">Send Enquiry →</button>
+          <p class="form-note">We'll respond within 1 business day. All enquiries are handled confidentially.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            <span class="logo-badge">TC</span>
+            <span class="logo-wordmark"><strong>TAHEV</strong><em>Consult</em></span>
+          </a>
+          <p>Procurement &amp; supply consulting built to serve both sides of the transaction. Clarity, strategy, and results — every engagement.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#services">Procurement Consulting</a></li>
+            <li><a href="#services">Tender Management</a></li>
+            <li><a href="#services">Business Structure</a></li>
+            <li><a href="#services">Supply Chain Advisory</a></li>
+            <li><a href="#services">Market Entry &amp; Seller Support</a></li>
+            <li><a href="#services">Training &amp; Capacity Building</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#about">About TAHEV</a></li>
+            <li><a href="#why">Why Choose Us</a></li>
+            <li><a href="#contact">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 <span>TAHEV</span>. All rights reserved.</p>
+        <p>Procurement &amp; Supply Consulting &mdash; Business Structure Advisory</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll-aware navbar
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Hamburger mobile menu
+    const hamburger = document.getElementById('hamburger');
+    hamburger.addEventListener('click', () => {
+      navbar.classList.toggle('mobile-open');
+    });
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => navbar.classList.remove('mobile-open'));
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(el => observer.observe(el));
+
+    // Smooth anchor scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Form submission (demo)
+    function submitForm(e) {
+      e.preventDefault();
+      const fname = document.getElementById('fname').value.trim();
+      const email = document.getElementById('email').value.trim();
+      if (!fname || !email) {
+        alert('Please fill in at least your name and email address.');
+        return;
+      }
+      const form = document.getElementById('contactForm');
+      form.innerHTML = `
+        <div class="form-success" style="display:block;">
+          <span class="checkmark">✓</span>
+          <h4>Thank You, ${fname}!</h4>
+          <p>Your enquiry has been received. A member of the TAHEV team will be in touch within one business day.</p>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

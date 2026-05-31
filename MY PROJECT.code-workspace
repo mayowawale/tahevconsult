@@ -1,0 +1,28 @@
+{
+	"folders": [
+		{
+			"name": "MY PROJECT",
+			"path": ".."
+		}
+	],
+	"settings": {
+		"sqltools.connections": [
+			{
+				"mysqlOptions": {
+					"authProtocol": "xprotocol",
+					"enableSsl": "Disabled"
+				},
+				"ssh": "Disabled",
+				"previewLimit": 50,
+				"server": "localhost",
+				"port": 33060,
+				"driver": "MySQL",
+				"name": "RBSN SQL LEARN",
+				"database": "CompanyDB",
+				"username": "root",
+				"password": "HeisKing1",
+				"connectionTimeout": 30
+			}
+		]
+	}
+}
