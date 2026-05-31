@@ -1138,9 +1138,235 @@
     }
     #why .why-banner-text h3 { color: var(--white); }
     #why .why-banner-text p { color: var(--text-muted); }
+
+    /* ══════════════════════════════════════════
+       ANIMATIONS & MODERN INTERACTIONS
+    ══════════════════════════════════════════ */
+
+    /* Scroll progress bar */
+    #progress-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+      background-size: 200% 100%;
+      z-index: 9999;
+      transform-origin: left;
+      transform: scaleX(0);
+      animation: shimmerBar 2s linear infinite;
+    }
+    @keyframes shimmerBar {
+      0% { background-position: 0% 0%; }
+      100% { background-position: 200% 0%; }
+    }
+
+    /* Custom cursor */
+    .cursor-dot {
+      position: fixed;
+      width: 8px; height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, background 0.2s, opacity 0.3s;
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1.5px solid rgba(201,168,76,0.55);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9997;
+      transform: translate(-50%, -50%);
+      transition: width 0.3s ease, height 0.3s ease, border-color 0.3s, background 0.3s;
+    }
+    .cursor-ring.expand {
+      width: 54px; height: 54px;
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.06);
+    }
+    @media (hover: none) {
+      .cursor-dot, .cursor-ring { display: none; }
+    }
+
+    /* Nav link animated underline */
+    .nav-links a { position: relative; }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1.5px;
+      background: var(--gold);
+      transition: width 0.3s cubic-bezier(.4,0,.2,1);
+      border-radius: 1px;
+    }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* Button shimmer on hover */
+    .btn-primary { position: relative; overflow: hidden; }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 50%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.28), transparent);
+      transform: skewX(-15deg);
+      transition: left 0.55s ease;
+      z-index: 1;
+    }
+    .btn-primary:hover::before { left: 160%; }
+
+    /* Ripple animation */
+    @keyframes rippleAnim {
+      to { width: 240px; height: 240px; opacity: 0; }
+    }
+
+    /* Float animation for hero stat cards */
+    @keyframes floatCard {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-10px); }
+    }
+    .hero-stats .stat-card:nth-child(1) { animation: floatCard 4s ease-in-out 2s infinite; }
+    .hero-stats .stat-card:nth-child(2) { animation: floatCard 4s ease-in-out 2.8s infinite; }
+    .hero-stats .stat-card:nth-child(3) { animation: floatCard 4s ease-in-out 3.6s infinite; }
+
+    /* Section label line grows in on reveal */
+    .section-label.reveal::before {
+      width: 0;
+      transition: width 0.7s cubic-bezier(.4,0,.2,1) 0.4s;
+    }
+    .section-label.reveal.visible::before { width: 24px; }
+
+    /* Process node pulse ring on hover */
+    @keyframes pulseRing {
+      0%   { opacity: 0.7; transform: scale(1); }
+      100% { opacity: 0;   transform: scale(2.2); }
+    }
+    .process-step:hover .step-node::after {
+      border-color: rgba(201,168,76,0.5) !important;
+      animation: pulseRing 0.9s ease-out infinite;
+    }
+
+    /* Service cards — individual borders, tilt-ready */
+    .services-grid {
+      gap: 1.4rem;
+      background: transparent;
+      border: none;
+      overflow: visible;
+    }
+    .service-card {
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 10px;
+      transition: background 0.35s, box-shadow 0.35s, border-color 0.35s;
+      overflow: hidden;
+      will-change: transform;
+    }
+    .service-card:hover {
+      border-color: rgba(201,168,76,0.45);
+      box-shadow: 0 20px 50px rgba(10,22,40,0.12);
+    }
+    .service-card:hover .service-icon-wrap {
+      transform: scale(1.12) rotate(-6deg);
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.12);
+    }
+    .service-icon-wrap { transition: all 0.35s cubic-bezier(.25,.8,.25,1); }
+
+    /* Why grid — individual borders, lift-ready */
+    .why-grid {
+      gap: 1.4rem;
+      background: transparent;
+      border: none;
+      overflow: visible;
+    }
+    .why-card {
+      border: 1px solid rgba(201,168,76,0.18);
+      border-radius: 10px;
+      transition: background 0.3s, transform 0.35s cubic-bezier(.25,.8,.25,1), box-shadow 0.35s, border-color 0.35s;
+      will-change: transform;
+    }
+    .why-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 44px rgba(10,22,40,0.11);
+      border-color: rgba(201,168,76,0.4);
+    }
+
+    /* Process stats — individual borders, lift */
+    .process-bottom {
+      gap: 1.4rem;
+      background: transparent;
+      border: none;
+      overflow: visible;
+    }
+    .process-stat {
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 10px;
+      transition: background 0.3s, transform 0.35s cubic-bezier(.25,.8,.25,1), box-shadow 0.35s;
+      will-change: transform;
+    }
+    .process-stat:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 14px 36px rgba(10,22,40,0.15);
+    }
+
+    /* Pillar cards lift */
+    .pillar {
+      transition: border-color 0.3s, background 0.3s, transform 0.3s cubic-bezier(.25,.8,.25,1), box-shadow 0.3s;
+    }
+    .pillar:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 22px rgba(10,22,40,0.08);
+    }
+
+    /* Contact items slide */
+    .contact-item {
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    }
+    .contact-item:hover { transform: translateX(5px); }
+
+    /* Footer links slide */
+    .footer-col ul a {
+      display: inline-block;
+      transition: color 0.3s, transform 0.3s;
+    }
+    .footer-col ul a:hover {
+      color: var(--white);
+      transform: translateX(5px);
+    }
+
+    /* Nav CTA gentle pulse on load */
+    @keyframes ctaPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(201,168,76,0.45); }
+      50%       { box-shadow: 0 0 0 9px rgba(201,168,76,0); }
+    }
+    .nav-cta { animation: ctaPulse 2.5s ease-in-out 3.5s 3; }
+
+    /* Form input focus glow */
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.15);
+    }
+
+    /* Reduced motion accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      .cursor-dot, .cursor-ring { display: none; }
+      #progress-bar { transition: none; }
+    }
   </style>
 </head>
 <body>
+
+  <!-- Scroll progress bar -->
+  <div id="progress-bar"></div>
+  <!-- Custom cursor (desktop only) -->
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
 
   <!-- NAVIGATION -->
   <nav id="navbar">
@@ -1616,45 +1842,152 @@
   </footer>
 
   <script>
-    // Scroll-aware navbar
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    /* ── REFERENCES ── */
+    const navbar      = document.getElementById('navbar');
+    const progressBar = document.getElementById('progress-bar');
+    const heroBg      = document.querySelector('.hero-bg');
+    const heroGrid    = document.querySelector('.hero-grid-overlay');
+    const cursorDot   = document.querySelector('.cursor-dot');
+    const cursorRing  = document.querySelector('.cursor-ring');
+
+    /* ── CUSTOM CURSOR ── */
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursorDot.style.left = mx + 'px';
+      cursorDot.style.top  = my + 'px';
+    });
+    (function ringLoop() {
+      rx += (mx - rx) * 0.11;
+      ry += (my - ry) * 0.11;
+      cursorRing.style.left = rx + 'px';
+      cursorRing.style.top  = ry + 'px';
+      requestAnimationFrame(ringLoop);
+    })();
+    document.querySelectorAll('a, button, .service-card, .why-card, .pillar, .contact-item, .nav-cta, .process-step').forEach(el => {
+      el.addEventListener('mouseenter', () => cursorRing.classList.add('expand'));
+      el.addEventListener('mouseleave', () => cursorRing.classList.remove('expand'));
     });
 
-    // Hamburger mobile menu
-    const hamburger = document.getElementById('hamburger');
-    hamburger.addEventListener('click', () => {
+    /* ── SCROLL HANDLER (rAF-throttled) ── */
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const sy    = window.scrollY;
+          const total = document.body.scrollHeight - window.innerHeight;
+
+          // Progress bar
+          progressBar.style.transform = `scaleX(${sy / total})`;
+
+          // Sticky nav
+          navbar.classList.toggle('scrolled', sy > 40);
+
+          // Hero parallax
+          if (sy < window.innerHeight) {
+            heroBg.style.transform   = `translateY(${sy * 0.25}px)`;
+            heroGrid.style.transform = `translateY(${sy * 0.12}px)`;
+          }
+
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+
+    /* ── HAMBURGER ── */
+    document.getElementById('hamburger').addEventListener('click', () => {
       navbar.classList.toggle('mobile-open');
     });
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      link.addEventListener('click', () => navbar.classList.remove('mobile-open'));
+    document.querySelectorAll('.nav-links a').forEach(l => {
+      l.addEventListener('click', () => navbar.classList.remove('mobile-open'));
     });
 
-    // Scroll reveal
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
+    /* ── SCROLL REVEAL ── */
+    const revealObs = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) {
           e.target.classList.add('visible');
-          observer.unobserve(e.target);
+          revealObs.unobserve(e.target);
         }
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-    reveals.forEach(el => observer.observe(el));
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-    // Smooth anchor scroll
+    /* ── SMOOTH ANCHOR SCROLL ── */
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', e => {
-        const target = document.querySelector(a.getAttribute('href'));
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
       });
     });
 
-    // Form submission (demo)
+    /* ── COUNTER ANIMATION ── */
+    function countUp(el, target, suffix, duration) {
+      let start;
+      (function step(ts) {
+        if (!start) start = ts;
+        const p = Math.min((ts - start) / duration, 1);
+        const v = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.floor(v * target) + suffix;
+        if (p < 1) requestAnimationFrame(step);
+      })(performance.now());
+    }
+    const counterObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target, t = el.textContent.trim();
+        if      (t === '3')    countUp(el, 3,   '',  900);
+        else if (t === '4')    countUp(el, 4,   '',  900);
+        else if (t === '100%') countUp(el, 100, '%', 1400);
+        counterObs.unobserve(el);
+      });
+    }, { threshold: 0.6 });
+    document.querySelectorAll('.stat-number, .process-stat-num').forEach(el => counterObs.observe(el));
+
+    /* ── 3D CARD TILT ── */
+    function addTilt(selector, deg) {
+      document.querySelectorAll(selector).forEach(card => {
+        card.addEventListener('mouseenter', () => {
+          card.style.transition = 'box-shadow 0.35s, background 0.35s, border-color 0.35s';
+        });
+        card.addEventListener('mousemove', e => {
+          const r = card.getBoundingClientRect();
+          const x = ((e.clientX - r.left)  / r.width  - 0.5) * deg;
+          const y = ((e.clientY - r.top)   / r.height - 0.5) * -deg;
+          card.style.transform = `perspective(700px) rotateX(${y}deg) rotateY(${x}deg) translateY(-5px)`;
+        });
+        card.addEventListener('mouseleave', () => {
+          card.style.transition = 'transform 0.5s ease, box-shadow 0.4s, background 0.35s, border-color 0.35s';
+          card.style.transform = '';
+        });
+      });
+    }
+    addTilt('.service-card', 5);
+    addTilt('.why-card',     4);
+    addTilt('.stat-card',    7);
+
+    /* ── BUTTON RIPPLE ── */
+    document.querySelectorAll('.btn-primary, .btn-ghost, .form-submit, .nav-cta').forEach(btn => {
+      btn.addEventListener('click', function (e) {
+        const s = document.createElement('span');
+        const r = this.getBoundingClientRect();
+        Object.assign(s.style, {
+          position: 'absolute', width: '4px', height: '4px',
+          left: (e.clientX - r.left) + 'px', top: (e.clientY - r.top) + 'px',
+          background: 'rgba(255,255,255,0.4)', borderRadius: '50%',
+          transform: 'translate(-50%,-50%)',
+          animation: 'rippleAnim 0.65s ease-out forwards',
+          pointerEvents: 'none', zIndex: '10',
+        });
+        this.style.position = 'relative';
+        this.style.overflow = 'hidden';
+        this.appendChild(s);
+        setTimeout(() => s.remove(), 700);
+      });
+    });
+
+    /* ── FORM SUBMISSION ── */
     function submitForm(e) {
       e.preventDefault();
       const fname = document.getElementById('fname').value.trim();
@@ -1663,14 +1996,12 @@
         alert('Please fill in at least your name and email address.');
         return;
       }
-      const form = document.getElementById('contactForm');
-      form.innerHTML = `
+      document.getElementById('contactForm').innerHTML = `
         <div class="form-success" style="display:block;">
           <span class="checkmark">✓</span>
           <h4>Thank You, ${fname}!</h4>
           <p>Your enquiry has been received. A member of the TAHEV team will be in touch within one business day.</p>
-        </div>
-      `;
+        </div>`;
     }
   </script>
 </body>
