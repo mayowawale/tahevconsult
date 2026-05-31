@@ -77,26 +77,14 @@
       text-decoration: none;
       color: var(--white);
     }
-    .logo-badge {
-      width: 40px;
-      height: 40px;
-      background: var(--gold);
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--serif);
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: var(--navy);
-      letter-spacing: 0.04em;
+    .logo-img {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
       flex-shrink: 0;
-      transition: background 0.3s, transform 0.3s;
+      transition: transform 0.3s;
     }
-    .logo:hover .logo-badge {
-      background: var(--gold-light);
-      transform: scale(1.06);
-    }
+    .logo:hover .logo-img { transform: scale(1.06); }
     .logo-wordmark {
       display: flex;
       flex-direction: column;
@@ -840,7 +828,7 @@
       margin-bottom: 3rem;
     }
     .footer-brand .logo { margin-bottom: 1rem; }
-    .footer-brand .logo-badge { width: 36px; height: 36px; font-size: 1rem; }
+    .footer-brand .logo-img { width: 36px; height: 36px; }
     .footer-brand p {
       font-size: 0.85rem;
       color: var(--text-muted);
@@ -1158,7 +1146,7 @@
   <nav id="navbar">
     <div class="container">
       <a href="#" class="logo">
-        <span class="logo-badge">TC</span>
+        <img src="logo.png" alt="TAHEV Consult" class="logo-img" />
         <span class="logo-wordmark"><strong>TAHEV</strong><em>Consult</em></span>
       </a>
       <ul class="nav-links" id="navLinks">
@@ -1595,7 +1583,7 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <a href="#" class="logo">
-            <span class="logo-badge">TC</span>
+            <img src="logo.png" alt="TAHEV Consult" class="logo-img" />
             <span class="logo-wordmark"><strong>TAHEV</strong><em>Consult</em></span>
           </a>
           <p>Procurement &amp; supply consulting built to serve both sides of the transaction. Clarity, strategy, and results — every engagement.</p>
